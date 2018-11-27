@@ -60,6 +60,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Source\Account.cs" />
+    <Compile Include="Source\Cell.cs" />
     <Compile Include="Source\Game.cs" />
     <Compile Include="Source\Item.cs" />
     <Compile Include="Source\Maze.cs" />
