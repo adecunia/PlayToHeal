@@ -20,6 +20,17 @@ namespace PlayToHeal.Source
             return boardGame;
         }
 
-       
+        public Cell[,] RandomMazeGeneration(int height, int weight)
+        {
+            boardGame = new Cell[height, weight];
+            List<Cell> VisitedCells;
+
+
+
+
+            return BoardGame;
+
+        }
+
     }
 }
