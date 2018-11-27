@@ -7,17 +7,19 @@ namespace PlayToHeal.Source
 {
     public class Maze
     {
-        private int[,] boardGame;
+        private Cell[,] boardGame;
         private int seed;
 
-        public int[,] BoardGame { get { return boardGame; } set { boardGame = value; } }
+        public Cell[,] BoardGame { get { return boardGame; } set { boardGame = value; } }
         public int Seed { get { return seed; } set { seed = value; } }
 
 
         // BoardGame Generation (To do)
-        public int[,] GenerateBoardGame()
+        public Cell[,] GenerateBoardGame()
         {
             return boardGame;
         }
+
+       
     }
 }
