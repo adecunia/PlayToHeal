@@ -8,5 +8,6 @@ Il sera un mélange de jeu de réflexion et de RPG (Role-Playing Game). Il pourr
 Le principe du jeu s’inspire du film Le Labyrinthe réalisé par Wes Ball. Chaque session de jeu sera représentée par une journée, le jour étant le moment où le joueur pourra réaliser les missions et la nuit il pourra améliorer son personnage en fonction des résultats du jour.
 Les missions seront de différentes natures mais toutes dans un labyrinthe généré aléatoirement tous les jours. Le joueur devra par exemple chercher des objets ou des matériaux pour améliorer son personnage, ou bien résoudre des problèmes logiques. La contrainte temps de la nuit qui arrive sera adaptée à chaque niveau de jeu de l’enfant.
 
-#Installation de XNA
+## Installation de XNA :
+
 http://flatredball.com/visual-studio-2017-xna-setup/
