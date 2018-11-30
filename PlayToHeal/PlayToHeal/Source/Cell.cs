@@ -18,5 +18,14 @@ namespace PlayToHeal.Source
         public bool South { get { return south; } set { south = value; } }
         public bool West { get { return west; } set { west = value; } }
         public bool East { get { return east; } set { east = value; } }
+
+        public Cell()
+        {
+            north = true;
+            south = true;
+            east = true;
+            west = true;
+        }
     }
+
 }
