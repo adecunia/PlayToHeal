@@ -1,3 +1,4 @@
+using PlayToHeal.Source;
 using System;
 
 namespace PlayToHeal
@@ -10,10 +11,13 @@ namespace PlayToHeal
         /// </summary>
         static void Main(string[] args)
         {
-            using (Game1 game = new Game1())
+            Maze m = new Maze(10, 10);
+            
+
+            /*using (Game1 game = new Game1())
             {
                 game.Run();
-            }
+            }*/
         }
     }
 #endif
