@@ -11,3 +11,9 @@ Les missions seront de différentes natures mais toutes dans un labyrinthe gén�
 ## Installation de XNA :
 
 http://flatredball.com/visual-studio-2017-xna-setup/
+
+## Collaborateurs :
+
+- BATTAS Ewenn - pBattas
+- DE CUNIAC Axel - adecunia
+- MEDEIROS Sandra - sndrmdrsbr
