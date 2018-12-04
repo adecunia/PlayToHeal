@@ -14,6 +14,7 @@ namespace PlayToHeal.Source
         private bool east;
         private int x;
         private int y;
+        private bool visited;
 
         public int Value { get { return value; } set { this.value = value; } }
         public bool North { get { return north; } set { north = value; } }
@@ -23,6 +24,7 @@ namespace PlayToHeal.Source
 
         public int X { get => x; set => x = value; }
         public int Y { get => y; set => y = value; }
+        public bool Visited { get => visited; set => visited = value; }
 
         public Cell()
         {
@@ -30,6 +32,7 @@ namespace PlayToHeal.Source
             south = true;
             east = true;
             west = true;
+            visited = false;
         }
 
     }
