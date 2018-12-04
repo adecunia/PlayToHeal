@@ -11,8 +11,10 @@ namespace PlayToHeal
         /// </summary>
         static void Main(string[] args)
         {
-            Maze m = new Maze(10, 10);
-            
+            Maze m = new Maze(5, 5);
+            Console.WriteLine("Maze ok\n");
+            Console.WriteLine(m.toString());
+            Console.ReadKey();
 
             /*using (Game1 game = new Game1())
             {
