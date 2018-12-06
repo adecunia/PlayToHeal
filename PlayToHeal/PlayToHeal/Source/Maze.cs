@@ -28,8 +28,6 @@ namespace PlayToHeal.Source
             }
 
             boardGame = GenerateBoardGame();
-
-
         }
 
         public Cell ChooseRandomCellOnBoardGame(Cell[,] boardGame)
@@ -51,9 +49,7 @@ namespace PlayToHeal.Source
             }//we take a random cell in our list of cell
             else
             {
-
                 return VisitedCell.First();
-
             }
 
         }
@@ -67,6 +63,10 @@ namespace PlayToHeal.Source
 
             while (VisitingCells.Count != 0)
             {
+                Console.Clear();
+                Console.WriteLine(toString());
+                Console.ReadKey();
+
                 if (!fullyVisited(c, boardGame))
                 {
                     Random rnd = new Random();
@@ -75,23 +75,75 @@ namespace PlayToHeal.Source
                     switch (direction)
                     {
                         case 1:
-                            if (c.North)    //if the north of the cell is a wall
+
+                            if (c.North && c.X != 0)    //if the north of the cell is a wall and  //if it is not the extreme north of the plate
                             {
-                                if (c.X != 0)    //if it is not the extreme north of the plate
+                                Cell NorthCell = boardGame[c.X - 1, c.Y];
+
+                                if (NorthCell.Visited == false)
                                 {
                                     c.North = false;        //declare it as a path
-                                    Cell cNeighbor = boardGame[c.X - 1, c.Y];
-                                    VisitingCells.Add(cNeighbor);    //we add the neighbor to the list
-                                    cNeighbor.Visited = true;
-                                    c = ChooseRandomCellonListCell(VisitingCells);   //choose a random cell from the list to start again
+                                    VisitingCells.Add(NorthCell);    //we add the neighbor to the list
+                                    NorthCell.South = false;    //we define the opposite direction of our cell as a path
+                                    NorthCell.Visited = true;
+                                }
+
+                                c = ChooseRandomCellonListCell(VisitingCells);   //choose a random cell from the list to start again
+                            }
+                            else
+                            {
+                                Random choice = new Random();
+                                int changedirection = rnd.Next(1, 4);
+
+                                if (changedirection == 1)
+                                {
+                                    goto case 2;        //if it the extreme north go to east
                                 }
                                 else
                                 {
-                                    Random choice = new Random();
-                                    int changedirection = rnd.Next(1, 3);
-                                    if (changedirection == 1)
+                                    if (changedirection == 2)
                                     {
-                                        goto case 2;        //if it the extreme north go to east
+                                        goto case 3;
+                                    }
+                                    else
+                                    {
+                                        goto case 4;    //else go to west
+                                    }
+
+                                }
+                            }
+                            break;
+
+                        case 2:
+
+                            if (c.East && c.Y != boardGame.GetLength(1) - 1)    //if the east of the cell is a wall
+                            {
+                                Cell EastCell = boardGame[c.X, c.Y + 1];
+                                if (EastCell.Visited == false)
+                                {
+                                    c.East = false;
+                                    VisitingCells.Add(EastCell);    //we add the neighbor to the list
+                                    EastCell.Visited = true;
+                                    EastCell.West = false;
+                                }
+
+                                c = ChooseRandomCellonListCell(VisitingCells);   //choose a random cell from the list to start again
+
+
+                            }
+                            else
+                            {
+                                int changedirection = rnd.Next(1, 4);
+
+                                if (changedirection == 1)
+                                {
+                                    goto case 1;        //if it the extreme north go to east
+                                }
+                                else
+                                {
+                                    if (changedirection == 2)
+                                    {
+                                        goto case 3;
                                     }
                                     else
                                     {
@@ -101,51 +153,38 @@ namespace PlayToHeal.Source
                             }
                             break;
 
-                        case 2:
-                            if (c.East)    //if the east of the cell is a wall
-                            {
-                                if (c.Y != boardGame.GetLength(1) - 1)
-                                {
-                                    c.East = false;
-                                    Cell cNeighbor = boardGame[c.X, c.Y + 1];
-                                    VisitingCells.Add(cNeighbor);    //we add the neighbor to the list
-                                    cNeighbor.Visited = true;
-                                    c = ChooseRandomCellonListCell(VisitingCells);   //choose a random cell from the list to start again
-                                }
-                                else
-                                {
-                                    Random choice = new Random();
-                                    int changedirection = rnd.Next(1, 3);
-                                    if (changedirection == 1)
-                                    {
-                                        goto case 1;        //if it the extreme north go to north
-                                    }
-                                    else
-                                    {
-                                        goto case 3;    //go to south
-                                    }
-                                }
-                            }
-                            break;
-
                         case 3:
-                            if (c.South)    //if the south of the cell is a wall
+
+                            if (c.South && c.X != boardGame.GetLength(0) - 1)    //if the south of the cell is a wall
                             {
-                                if (c.X != boardGame.GetLength(0) - 1)
+                                Cell SouthCell = boardGame[c.X + 1, c.Y];
+
+                                if (SouthCell.Visited == false)
                                 {
+
                                     c.South = false;
-                                    Cell cNeighbor = boardGame[c.X + 1, c.Y];
-                                    VisitingCells.Add(cNeighbor);    //we add the neighbor to the list
-                                    cNeighbor.Visited = true;
-                                    c = ChooseRandomCellonListCell(VisitingCells);   //choose a random cell from the list to start again
+                                    VisitingCells.Add(SouthCell);    //we add the neighbor to the list
+                                    SouthCell.Visited = true;
+                                    SouthCell.North = false;
+                                }
+
+                                c = ChooseRandomCellonListCell(VisitingCells);   //choose a random cell from the list to start again
+
+
+                            }
+                            else
+                            {
+                                int changedirection = rnd.Next(1, 4);
+
+                                if (changedirection == 1)
+                                {
+                                    goto case 1;        //if it the extreme north go to east
                                 }
                                 else
                                 {
-                                    Random choice = new Random();
-                                    int changedirection = rnd.Next(1, 3);
-                                    if (changedirection == 1)
+                                    if (changedirection == 2)
                                     {
-                                        goto case 2;        //if it the extreme north go to east
+                                        goto case 2;
                                     }
                                     else
                                     {
@@ -156,39 +195,52 @@ namespace PlayToHeal.Source
                             break;
 
                         case 4:
-                            if (c.West)    //if the west of the cell is a wall
+
+                            if (c.West && c.Y != 0)    //if the west of the cell is a wall
                             {
-                                if (c.Y != 0)
+                                Cell WestCell = boardGame[c.X, c.Y - 1];
+                                if (WestCell.Visited == false)
                                 {
                                     c.West = false;
-                                    Cell cNeighbor = boardGame[c.X, c.Y - 1];
-                                    VisitingCells.Add(cNeighbor);    //we add the neighbor to the list
-                                    cNeighbor.Visited = true;
-                                    c = ChooseRandomCellonListCell(VisitingCells);   //choose a random cell from the list to start again
+                                    VisitingCells.Add(WestCell);    //we add the neighbor to the list
+                                    WestCell.Visited = true;
+                                    WestCell.East = false;
+                                }
+
+                                c = ChooseRandomCellonListCell(VisitingCells);   //choose a random cell from the list to start again
+
+
+                            }
+                            else
+                            {
+                                int changedirection = rnd.Next(1, 4);
+
+                                if (changedirection == 1)
+                                {
+                                    goto case 1;        //if it the extreme north go to east
                                 }
                                 else
                                 {
-                                    Random choice = new Random();
-                                    int changedirection = rnd.Next(1, 3);
-                                    if (changedirection == 1)
+                                    if (changedirection == 2)
                                     {
-                                        goto case 1;        //if it the extreme north go to north
+                                        goto case 2;
                                     }
                                     else
                                     {
-                                        goto case 3;    //go to south
+                                        goto case 3;    //else go to west
                                     }
                                 }
                             }
                             break;
-
                     }
                 }
                 else
                 {
                     VisitingCells.Remove(c);
-                    c = ChooseRandomCellonListCell(VisitingCells);
-
+                    if (VisitingCells.Count != 0)
+                    {
+                        c = ChooseRandomCellonListCell(VisitingCells);
+                    }
                 }
             }
 
@@ -232,286 +284,6 @@ namespace PlayToHeal.Source
             return true;
         }
 
-        /* public bool VisitedNeighbor(Cell c, Cell[,] boardGame, List<Cell> CellTovisit)   //check if all the neigborhood of a cell was already visited
-         {
-             if (c.X != 0 && c.X != boardGame.GetLength(0) - 1 && c.Y != 0 && c.Y != boardGame.GetLength(1) - 1)
-             {
-                 if (HasBeenVisited(boardGame[c.X + 1, c.Y],CellTovisit) && CellTovisit.Contains(boardGame[c.X - 1, c.Y]) && CellTovisit.Contains(boardGame[c.X, c.Y - 1]) && CellTovisit.Contains(boardGame[c.X, c.Y + 1]))
-                 {
-                     return true;
-                 }
-                 else
-                 {
-                     return false;
-                 }
-             }
-
-             else
-             {
-                 if (c.X == 0)
-                 {
-                     if (c.Y == 0)
-                     {
-                         if (CellTovisit.Contains(boardGame[c.X + 1, c.Y]) && CellTovisit.Contains(boardGame[c.X, c.Y + 1]))
-                         {
-                             return true;
-                         }
-                         else
-                         {
-                             return false;
-                         }
-                     }
-                     else
-                     {
-                         if (c.Y != boardGame.GetLength(1) - 1)
-                         {
-                             if (CellTovisit.Contains(boardGame[c.X + 1, c.Y]) && CellTovisit.Contains(boardGame[c.X, c.Y - 1]))
-                             {
-                                 return true;
-                             }
-                             else
-                             {
-                                 return false;
-                             }
-                         }
-                         else
-                         {
-                             if (CellTovisit.Contains(boardGame[c.X + 1, c.Y]) && CellTovisit.Contains(boardGame[c.X, c.Y - 1]) && CellTovisit.Contains(boardGame[c.X, c.Y + 1]))
-                             {
-                                 return true;
-                             }
-                             else
-                             {
-                                 return false;
-                             }
-                         }
-                     }
-                 }
-
-                 if (c.X == boardGame.GetLength(0) - 1)
-                 {
-                     if (c.Y == 0)
-                     {
-                         if (CellTovisit.Contains(boardGame[c.X - 1, c.Y]) && CellTovisit.Contains(boardGame[c.X, c.Y + 1]))
-                         {
-                             return true;
-                         }
-                         else
-                         {
-                             return false;
-                         }
-                     }
-
-                     else
-                     {
-                         if (c.Y == boardGame.GetLength(1) - 1)
-                         {
-                             if (CellTovisit.Contains(boardGame[c.X - 1, c.Y]) && CellTovisit.Contains(boardGame[c.X, c.Y - 1]))
-                             {
-                                 return true;
-                             }
-                             else
-                             {
-                                 return false;
-                             }
-                         }
-                         else
-                         {
-                             if (CellTovisit.Contains(boardGame[c.X - 1, c.Y]) && CellTovisit.Contains(boardGame[c.X, c.Y - 1]) && CellTovisit.Contains(boardGame[c.X, c.Y + 1]))
-                             {
-                                 return true;
-                             }
-                             else
-                             {
-                                 return false;
-                             }
-                         }
-                     }
-                 }
-
-                 if (c.Y == 0)
-                 {
-                     if (c.X != 0 && c.X != boardGame.GetLength(0) - 1)
-                     {
-                         if (CellTovisit.Contains(boardGame[c.X + 1, c.Y]) && CellTovisit.Contains(boardGame[c.X - 1, c.Y]) && CellTovisit.Contains(boardGame[c.X, c.Y + 1]))
-                         {
-                             return true;
-                         }
-                         else
-                         {
-                             return false;
-                         }
-                     }
-                 }
-
-                 if (c.Y == boardGame.GetLength(1) - 1)
-                 {
-                     if (c.X != 0 && c.X != boardGame.GetLength(0) - 1)
-                     {
-                         if (CellTovisit.Contains(boardGame[c.X + 1, c.Y]) && CellTovisit.Contains(boardGame[c.X - 1, c.Y]) && CellTovisit.Contains(boardGame[c.X, c.Y - 1]))
-                         {
-                             return true;
-                         }
-                         else
-                         {
-                             return false;
-                         }
-                     }
-                 }
-             }
-             return false;           //for all path returned
-         }
-         */
-
-        /* public Cell[,] CreatePathToRandomNeighbor(Cell c, Cell[,] boardGame, List<Cell> CellsToVisit)
-    {
-
-        bool found_direction = false;
-
-        Random rnd = new Random();
-        int direction = rnd.Next(1, 5);   //we choose a random direction for our path
-        switch (direction)
-        {
-            case 1:
-                if (c.North)    //if the north of the cell is a wall
-                {
-                    if (c.X != 0)    //if it is not the extreme north of the plate
-                    {
-                        found_direction = true;     //go out of the switch
-                        c.North = false;        //declare it as a path
-                        Cell cNeighbor = boardGame[c.X - 1, c.Y];
-                        CellsToVisit.Add(cNeighbor);    //we add the neighbor to the list
-                        c = ChooseRandomCellonListCell(CellsToVisit);   //choose a random cell from the list to start again
-                        return CreatePathToRandomNeighbor(c, boardGame, CellsToVisit);
-                    }
-                    else
-                    {
-                        Random choice = new Random();
-                        int changedirection = rnd.Next(1, 3);
-                        if (changedirection == 1)
-                        {
-                            goto case 2;        //if it the extreme north go to east
-                        }
-                        else
-                        {
-                            goto case 4;    //else go to west
-                        }
-                    }
-                }
-                break;
-
-            case 2:
-                if (c.East)    //if the east of the cell is a wall
-                {
-                    if (c.Y != boardGame.GetLength(1) - 1)
-                    {
-                        found_direction = true;
-                        c.East = false;
-                        Cell cNeighbor = boardGame[c.X, c.Y + 1];
-                        CellsToVisit.Add(cNeighbor);    //we add the neighbor to the list
-                        c = ChooseRandomCellonListCell(CellsToVisit);   //choose a random cell from the list to start again
-                        return CreatePathToRandomNeighbor(c, boardGame, CellsToVisit);
-                    }
-                    else
-                    {
-                        Random choice = new Random();
-                        int changedirection = rnd.Next(1, 3);
-                        if (changedirection == 1)
-                        {
-                            goto case 1;        //if it the extreme north go to north
-                        }
-                        else
-                        {
-                            goto case 3;    //go to south
-                        }
-                    }
-                }
-                break;
-
-            case 3:
-                if (c.South)    //if the south of the cell is a wall
-                {
-                    if (c.X != boardGame.GetLength(0) - 1)
-                    {
-                        found_direction = true;
-                        c.South = false;
-                        Cell cNeighbor = boardGame[c.X + 1, c.Y];
-                        CellsToVisit.Add(cNeighbor);    //we add the neighbor to the list
-                        c = ChooseRandomCellonListCell(CellsToVisit);   //choose a random cell from the list to start again
-                        return CreatePathToRandomNeighbor(c, boardGame, CellsToVisit);
-                    }
-                    else
-                    {
-                        Random choice = new Random();
-                        int changedirection = rnd.Next(1, 3);
-                        if (changedirection == 1)
-                        {
-                            goto case 2;        //if it the extreme north go to east
-                        }
-                        else
-                        {
-                            goto case 4;    //else go to west
-                        }
-                    }
-                }
-                break;
-
-            case 4:
-                if (c.West)    //if the west of the cell is a wall
-                {
-                    if (c.Y != 0)
-                    {
-                        found_direction = true;
-                        c.West = false;
-                        Cell cNeighbor = boardGame[c.X, c.Y - 1];
-                        CellsToVisit.Add(cNeighbor);    //we add the neighbor to the list
-                        c = ChooseRandomCellonListCell(CellsToVisit);   //choose a random cell from the list to start again
-                        return CreatePathToRandomNeighbor(c, boardGame, CellsToVisit);
-                    }
-                    else
-                    {
-                        Random choice = new Random();
-                        int changedirection = rnd.Next(1, 3);
-                        if (changedirection == 1)
-                        {
-                            goto case 1;        //if it the extreme north go to north
-                        }
-                        else
-                        {
-                            goto case 3;    //go to south
-                        }
-                    }
-                }
-                break;
-
-        }
-
-        if (!found_direction)
-        {
-            if (VisitedNeighbor(c, boardGame, CellsToVisit))   //if all the neigborhood of the cell has been visited
-            {
-                CellsToVisit.Remove(c);
-                if (CellsToVisit.Count != 0)
-                {
-                    c = ChooseRandomCellonListCell(CellsToVisit);
-                    return CreatePathToRandomNeighbor(c, boardGame, CellsToVisit);
-                }
-                else
-                {
-                    return boardGame;
-                }
-            }
-
-            else
-            {
-                return CreatePathToRandomNeighbor(c, boardGame, CellsToVisit); //same operation with other direction
-            }
-
-        }
-        return boardGame; //to make an return access on all part of the code
-
-    }
-    */
 
         public string toString()
         {
@@ -521,80 +293,62 @@ namespace PlayToHeal.Source
             {
                 for (int j = 0; j < boardGame.GetLength(1); j++)
                 {
-                    if (j != boardGame.GetLength(1) - 1)
-                    {
-                        if (boardGame[i, j].North)
-                        {
-                            maze += " _ ";
-                        }
-                        else
-                        {
-                            maze += "   ";
-                        }
-                    }
 
+                    if (boardGame[i, j].North)
+                    {
+                        maze += " _ ";
+                    }
                     else
                     {
-                        maze += "\n";
+                        maze += "   ";
                     }
+
                 }
+                maze += "\n";
 
                 for (int j = 0; j < boardGame.GetLength(1); j++)
                 {
-                    if (j != boardGame.GetLength(1) - 1)
+
+                    if (boardGame[i, j].West && boardGame[i, j].East)
                     {
-                        if (boardGame[i, j].West && boardGame[i, j].East)
+                        maze += "[ ]";
+                    }
+                    else
+                    {
+                        if (boardGame[i, j].West && !boardGame[i, j].East)
                         {
-                            maze += "[ ]";
+                            maze += "[  ";
+
                         }
                         else
                         {
-                            if (boardGame[i, j].West)
+                            if (boardGame[i, j].East && !boardGame[i, j].West)
                             {
-                                maze += "[  ";
-
+                                maze += "  ]";
                             }
                             else
                             {
-                                if (boardGame[i, j].East)
-                                {
-                                    maze += "  ]";
-                                }
-                                else
-                                {
-                                    maze += "   ";
-                                }
+                                maze += "   ";
                             }
                         }
                     }
-
-                    else
-                    {
-                        maze += "\n";
-                    }
-
                 }
+                maze += "\n";
 
                 for (int j = 0; j < boardGame.GetLength(1); j++)
                 {
-                    if (j != boardGame.GetLength(1) - 1)
-                    {
-                        if (boardGame[i, j].South)
-                        {
-                            maze += " ═ ";
-                        }
-                        else
-                        {
-                            maze += "   ";
-                        }
-                    }
 
+                    if (boardGame[i, j].South)
+                    {
+                        maze += " ═ ";
+                    }
                     else
                     {
-                        maze += "\n";
+                        maze += "   ";
                     }
-                }
 
+                }
+                maze += "\n";
             }
             return maze;
         }
