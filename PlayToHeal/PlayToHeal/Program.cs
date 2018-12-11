@@ -1,4 +1,5 @@
 using System;
+using PlayToHeal.Source;
 
 namespace PlayToHeal
 {
@@ -10,10 +11,10 @@ namespace PlayToHeal
         /// </summary>
         static void Main(string[] args)
         {
-            using (Game1 game = new Game1())
-            {
-                game.Run();
-            }
+            Maze m = new Maze(5, 5);
+            Console.WriteLine("Maze ok\n");
+            Console.WriteLine(m.toString());
+            Console.ReadKey();
         }
     }
 #endif
