@@ -17,3 +17,4 @@ http://flatredball.com/visual-studio-2017-xna-setup/
 - BATTAS Ewenn - pBattas
 - DE CUNIAC Axel - adecunia
 - MEDEIROS Sandra - sndrmdrsbr
+- BAOUAYA-MOULOMBA Nicolas - Nighthyst
