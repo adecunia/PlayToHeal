@@ -6,16 +6,18 @@
 // when you should hold your muscle static. You will see led bar from level 10 turn to 
 // level 0, it means static analog value get ok
 
-int max_analog_dta      = 300;              // max analog data
+int max_analog_dta      = 700;              // max analog data
 int min_analog_dta      = 100;              // min analog data
 int static_analog_dta   = 0;                // static analog data
 
 const int L1 = 2; // broche 2 du micro-contrôleur se nomme maintenant : L1
 const int L2 = 4;
 
+
 // get analog value
 int getAnalog(int pin)
 {
+  /*
     long sum = 0;
     
     for(int i=0; i<32; i++)
@@ -29,15 +31,18 @@ int getAnalog(int pin)
     min_analog_dta = min_analog_dta>dta ? dta : min_analog_dta;         // if min data
     
     return sum>>5;
+    */
+    return analogRead(pin);
 }
 
 void setup()
 {
-    Serial.begin(9600);
+    Serial.begin(115200);
     pinMode(L1, OUTPUT); //L1 est une broche de sortie
     pinMode(L2, OUTPUT); //L1 est une broche de sortie
     long sum = 0;
 
+/*
     for(int i=0; i<=10; i++)
     {
         for(int j=0; j<100; j++)
@@ -55,18 +60,20 @@ void setup()
 
     Serial.print("static_analog_dta = ");
     Serial.println(static_analog_dta);
+*/
 }
 
 void loop()
 {
 
     int val = getAnalog(A0);                    // get Analog value
-
+   
     Serial.println(val);
-    if(val > 250)
+    
+    if(val > 600)
     {
-      Bouton();
-      Serial.println("Activate !");
+      //Bouton();
+      Serial.println("Xobx powers activate");
     }
 
 }
@@ -77,13 +84,20 @@ void loop()
  * */
 void Bouton()
 {
-  int start = millis();
+  unsigned long start = millis();
+
+  digitalWrite(L1, HIGH); //allumer L1
+    digitalWrite(L2, HIGH); //allumer L1
+  
+    digitalWrite(L1, LOW); // Eteindre L1
+    digitalWrite(L2, LOW); // Eteindre L1
 
   /*
    * Il faut envoyer un signal pendant un certain laps de temps
    * pour que la manette "comprenne" que l'on souhaite appuyer.
    * La durée idéale de cet intervelle reste à déterminer.
    */
+   
   while(millis() < start + 75)
   {
     digitalWrite(L1, HIGH); //allumer L1
@@ -92,6 +106,6 @@ void Bouton()
     digitalWrite(L1, LOW); // Eteindre L1
     digitalWrite(L2, LOW); // Eteindre L1
   }
-  //delay(200);
+
 
 }
