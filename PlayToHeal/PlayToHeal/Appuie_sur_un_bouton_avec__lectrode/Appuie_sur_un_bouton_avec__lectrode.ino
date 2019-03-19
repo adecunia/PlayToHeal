@@ -1,4 +1,4 @@
-// Grove - EMG Sensor demo code
+  // Grove - EMG Sensor demo code
 // This demo will need a Grove - Led Bar to show the motion 
 // Grove - EMG Sensor connect to A0
 // Grove - LED Bar connect to D8, D9
@@ -17,7 +17,7 @@ const int L2 = 4;
 // get analog value
 int getAnalog(int pin)
 {
-  /*
+
     long sum = 0;
     
     for(int i=0; i<32; i++)
@@ -31,8 +31,8 @@ int getAnalog(int pin)
     min_analog_dta = min_analog_dta>dta ? dta : min_analog_dta;         // if min data
     
     return sum>>5;
-    */
-    return analogRead(pin);
+  
+    //return analogRead(pin);
 }
 
 void setup()
@@ -42,7 +42,6 @@ void setup()
     pinMode(L2, OUTPUT); //L1 est une broche de sortie
     long sum = 0;
 
-/*
     for(int i=0; i<=10; i++)
     {
         for(int j=0; j<100; j++)
@@ -60,7 +59,6 @@ void setup()
 
     Serial.print("static_analog_dta = ");
     Serial.println(static_analog_dta);
-*/
 }
 
 void loop()
@@ -70,10 +68,10 @@ void loop()
    
     Serial.println(val);
     
-    if(val > 600)
+    if(val > 315)
     {
-      //Bouton();
-      Serial.println("Xobx powers activate");
+      Bouton();
+      //Serial.println("Xobx powers activate");
     }
 
 }
@@ -85,12 +83,6 @@ void loop()
 void Bouton()
 {
   unsigned long start = millis();
-
-  digitalWrite(L1, HIGH); //allumer L1
-    digitalWrite(L2, HIGH); //allumer L1
-  
-    digitalWrite(L1, LOW); // Eteindre L1
-    digitalWrite(L2, LOW); // Eteindre L1
 
   /*
    * Il faut envoyer un signal pendant un certain laps de temps
